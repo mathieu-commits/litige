@@ -89,49 +89,49 @@
             font-size: 0.9rem;
         }
 
-      
-      
+        /* Section FAQ */
+        .faq-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
 
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-                z-index: 1000;
-            }
+        .faq-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
 
-            .nav-links.active {
-                display: flex;
-            }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
 
-            .pricing-card {
-                width: 90%;
-                margin: 15px auto;
-            }
+        .faq-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-            .pricing h2 {
-                font-size: 1.8rem;
-            }
+        .faq-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
     <!-- Header avec menu mobile -->
-   <header>
+    <header>
         <nav class="container">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Demecall">
             </a>
-            <!-- Bouton menu mobile UNIQUEMENT dans le HTML -->
             <button class="menu-toggle" aria-label="Ouvrir le menu">☰</button>
             <ul class="nav-links">
                 <li><a href="services.html">Nos Services</a></li>
-                <li><a href="tarifs.html">Tarifs</a></li>
+                <li><a href="tarifs.html" class="active">Tarifs</a></li>
                 <li><a href="avis.html">Avis Clients</a></li>
                 <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
                 <li><a href="contact.html">Contact</a></li>
@@ -295,31 +295,20 @@
             const navLinks = document.querySelector('.nav-links');
 
             if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                });
-            }
-
-            // Gestion du menu en fonction de la taille de l'écran
-            function handleResize() {
-                if (window.innerWidth <= 768) {
-                    if (menuToggle) menuToggle.style.display = 'block';
-                    if (navLinks) navLinks.style.display = 'none';
-                } else {
-                    if (menuToggle) menuToggle.style.display = 'none';
-                    if (navLinks) {
-                        navLinks.style.display = 'flex';
+                // Fermer le menu si on clique en dehors
+                document.addEventListener('click', function(e) {
+                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
                         navLinks.classList.remove('active');
                     }
-                }
-            }
+                });
 
-            // Appelle la fonction au chargement et au redimensionnement
-            window.addEventListener('resize', handleResize);
-            handleResize();
+                // Ouvrir/fermer le menu
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+                });
 
-            // Fermer le menu quand on clique sur un lien
-            if (navLinks) {
+                // Fermer le menu quand on clique sur un lien
                 const links = navLinks.querySelectorAll('a');
                 links.forEach(link => {
                     link.addEventListener('click', function() {
