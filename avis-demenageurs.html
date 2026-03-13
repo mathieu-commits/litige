@@ -5,19 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avis Déménageurs - LitigeDemecall</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Header avec menu mobile -->
-    <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Titre de ta page - LitigeDemecall</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* Style pour le menu mobile - à ajouter dans ton style.css */
-      
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --success-color: #10b981;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-color: #e2e8f0;
+            --accent-color: #ef4444;
+            --star-color: #ffc107;
+        }
+
+        /* Styles pour le formulaire */
+        .form-section {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--light-color);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 1em;
+            padding-right: 30px;
+        }
+
+        /* Menu mobile */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+                margin-right: 10px;
+            }
 
             .nav-links {
                 display: none;
@@ -28,35 +101,44 @@
                 background: white;
                 flex-direction: column;
                 padding: 20px;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
             }
 
             .nav-links.active {
                 display: flex;
             }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .form-container {
+                padding: 25px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header avec menu mobile corrigé -->
-  <header>
+    <!-- Header avec menu mobile -->
+    <header>
         <nav class="container">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Demecall">
             </a>
-            <!-- Bouton menu mobile UNIQUEMENT dans le HTML -->
             <button class="menu-toggle" aria-label="Ouvrir le menu">☰</button>
             <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
                 <li><a href="services.html">Nos Services</a></li>
                 <li><a href="tarifs.html">Tarifs</a></li>
                 <li><a href="avis.html">Avis Clients</a></li>
-                <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
+                <li><a href="avis-demenageurs.html" class="active">Avis Déménageurs</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
             <a href="contact.html" class="cta-button">Déposer mon dossier</a>
         </nav>
     </header>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -108,7 +190,7 @@
                         <label for="commentaire">Votre avis *</label>
                         <textarea id="commentaire" name="commentaire" placeholder="Décrivez votre expérience avec cette société de déménagement..." required></textarea>
                     </div>
-                    <button type="submit" class="cta-button">Envoyer mon avis</button>
+                    <button type="submit" class="cta-button" id="submit-btn">Envoyer mon avis</button>
                 </form>
             </div>
         </div>
@@ -147,7 +229,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Gestion du menu mobile
@@ -155,8 +236,27 @@
             const navLinks = document.querySelector('.nav-links');
 
             if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', function() {
+                // Fermer le menu si on clique en dehors
+                document.addEventListener('click', function(e) {
+                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+
+                // Ouvrir/fermer le menu
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     navLinks.classList.toggle('active');
+                });
+
+                // Fermer le menu quand on clique sur un lien
+                const links = navLinks.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            navLinks.classList.remove('active');
+                        }
+                    });
                 });
             }
 
@@ -166,23 +266,44 @@
                 avisForm.addEventListener('submit', function(e) {
                     e.preventDefault();
 
-                    // Récupérer les valeurs du formulaire
+                    const submitBtn = document.getElementById('submit-btn');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = "Envoi en cours...";
+                    }
+
+                    // Validation des champs
+                    const nom = document.getElementById('nom').value;
+                    const email = document.getElementById('email').value;
+                    const societe = document.getElementById('societe').value;
+                    const note = document.getElementById('note').value;
+                    const commentaire = document.getElementById('commentaire').value;
+
+                    if (!nom || !email || !societe || !note || !commentaire) {
+                        alert("Veuillez remplir tous les champs obligatoires.");
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = "Envoyer mon avis";
+                        }
+                        return;
+                    }
+
+                    // Stocker l'avis dans localStorage (simulation)
                     const formData = {
                         id: Date.now(),
-                        nom: document.getElementById('nom').value,
-                        email: document.getElementById('email').value,
-                        societe: document.getElementById('societe').value,
-                        note: document.getElementById('note').value,
-                        commentaire: document.getElementById('commentaire').value,
+                        nom: nom,
+                        email: email,
+                        societe: societe,
+                        note: note,
+                        commentaire: commentaire,
                         date: new Date().toISOString().split('T')[0]
                     };
 
-                    // Stocker l'avis dans pending-avis-demenageurs.json (simulé avec localStorage)
                     let pendingAvis = JSON.parse(localStorage.getItem('pendingAvisDemenageurs')) || [];
                     pendingAvis.push(formData);
                     localStorage.setItem('pendingAvisDemenageurs', JSON.stringify(pendingAvis));
 
-                    // Envoyer le formulaire à FormSubmit
+                    // Envoyer le formulaire
                     fetch(this.action, {
                         method: this.method,
                         body: new FormData(this)
@@ -190,8 +311,11 @@
                     .then(response => {
                         if (response.ok) {
                             alert("Merci pour votre avis ! Il sera validé sous peu.");
+
+                            // Réinitialiser le formulaire
                             this.reset();
-                            // Redirection si spécifiée dans _next
+
+                            // Redirection si spécifiée
                             const nextUrl = this.querySelector('input[name="_next"]').value;
                             if (nextUrl) {
                                 window.location.href = nextUrl;
@@ -203,6 +327,12 @@
                     .catch(error => {
                         console.error('Erreur:', error);
                         alert("Une erreur est survenue. Veuillez réessayer.");
+                    })
+                    .finally(() => {
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = "Envoyer mon avis";
+                        }
                     });
                 });
             }
