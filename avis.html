@@ -5,21 +5,211 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avis Clients - LitigeDemecall</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Les styles spécifiques ont été déplacés dans le fichier style.css -->
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --success-color: #10b981;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-color: #e2e8f0;
+            --accent-color: #ef4444;
+            --star-color: #ffc107;
+        }
+
+        /* Styles pour les avis */
+        .avis-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .avis-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            color: var(--dark-color);
+        }
+
+        .avis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .avis-card {
+            background: var(--light-color);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .avis-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .avis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .avis-header h4 {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .avis-header .stars {
+            color: var(--star-color);
+            font-size: 1.2rem;
+        }
+
+        .avis-company {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-avis-button {
+            display: block;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .avis-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--light-color);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .rating-options {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-direction: row-reverse;
+        }
+
+        .rating-options input {
+            display: none;
+        }
+
+        .rating-options label {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            margin: 0 2px;
+            transition: color 0.2s;
+        }
+
+        .rating-options input:checked ~ label,
+        .rating-options label:hover,
+        .rating-options label:hover ~ label {
+            color: var(--star-color);
+        }
+
+        .rating-error {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Menu mobile */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+                margin-right: 10px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .avis-form-container {
+                padding: 25px;
+            }
+
+            .avis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header avec menu mobile -->
-  <header>
+    <header>
         <nav class="container">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Demecall">
             </a>
-            <!-- Bouton menu mobile UNIQUEMENT dans le HTML -->
             <button class="menu-toggle" aria-label="Ouvrir le menu">☰</button>
             <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
                 <li><a href="services.html">Nos Services</a></li>
                 <li><a href="tarifs.html">Tarifs</a></li>
-                <li><a href="avis.html">Avis Clients</a></li>
+                <li><a href="avis.html" class="active">Avis Clients</a></li>
                 <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
@@ -45,9 +235,7 @@
                 <div class="avis-card">
                     <div class="avis-header">
                         <h4>Sophie M.</h4>
-                        <div>
-                            <span>★★★★★</span>
-                        </div>
+                        <div class="stars">★★★★★</div>
                     </div>
                     <div class="avis-company">Déménagements Martin</div>
                     <p>Grâce à Demecall, j'ai récupéré 1 200 € pour mes meubles endommagés. Leur équipe a été très professionnelle et réactive. Je recommande sans hésitation !</p>
@@ -55,9 +243,7 @@
                 <div class="avis-card">
                     <div class="avis-header">
                         <h4>Thomas L.</h4>
-                        <div>
-                            <span>★★★★★</span>
-                        </div>
+                        <div class="stars">★★★★★</div>
                     </div>
                     <div class="avis-company">Transports Rapid</div>
                     <p>Mon déménagement a été annulé à la dernière minute. Demecall a obtenu un remboursement complet en moins d'une semaine. Service impeccable !</p>
@@ -65,9 +251,7 @@
                 <div class="avis-card">
                     <div class="avis-header">
                         <h4>Claire D.</h4>
-                        <div>
-                            <span>★★★★☆</span>
-                        </div>
+                        <div class="stars">★★★★☆</div>
                     </div>
                     <div class="avis-company">Déménagements Pro</div>
                     <p>J'ai eu un problème de facturation. Demecall a négocié une réduction de 30% sur ma facture. Très satisfait de leur intervention.</p>
@@ -109,6 +293,7 @@
                             <input type="radio" id="star1" name="rating" value="1">
                             <label for="star1">★</label>
                         </div>
+                        <div class="rating-error" id="rating-error">Veuillez sélectionner une note</div>
                     </div>
                     <div class="form-group">
                         <label for="titre">Titre de votre avis *</label>
@@ -137,7 +322,7 @@
                         <li><a href="index.html">Accueil</a></li>
                         <li><a href="services.html">Nos Services</a></li>
                         <li><a href="tarifs.html">Tarifs</a></li>
-                        <li><a href="avis.html">Avis Clients</a></li>
+                        <li><a href="avis.html" class="active">Avis Clients</a></li>
                         <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
@@ -157,7 +342,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Gestion du menu mobile
@@ -165,32 +349,35 @@
             const navLinks = document.querySelector('.nav-links');
 
             if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', function() {
+                // Fermer le menu si on clique en dehors
+                document.addEventListener('click', function(e) {
+                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+
+                // Ouvrir/fermer le menu
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     navLinks.classList.toggle('active');
+                });
+
+                // Fermer le menu quand on clique sur un lien
+                const links = navLinks.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            navLinks.classList.remove('active');
+                        }
+                    });
                 });
             }
 
             // Gestion du formulaire d'avis
             const avisForm = document.getElementById('avis-form');
             if (avisForm) {
-                // Gestion de l'affichage des fichiers uploadés (si tu ajoutes cette fonctionnalité plus tard)
-                const fileInput = document.getElementById('preuves');
-                if (fileInput) {
-                    const fileNamesContainer = document.querySelector('.file-upload p');
-                    if (fileNamesContainer) {
-                        fileInput.addEventListener('change', function() {
-                            if (this.files.length > 0) {
-                                let fileNames = '';
-                                for (let i = 0; i < this.files.length; i++) {
-                                    fileNames += this.files[i].name + (i < this.files.length - 1 ? ', ' : '');
-                                }
-                                fileNamesContainer.textContent = 'Fichiers sélectionnés: ' + fileNames;
-                            } else {
-                                fileNamesContainer.textContent = 'Glissez-déposez vos fichiers ici ou cliquez pour parcourir';
-                            }
-                        });
-                    }
-                }
+                // Gestion de la notation par étoiles
+                const ratingError = document.getElementById('rating-error');
 
                 avisForm.addEventListener('submit', function(e) {
                     e.preventDefault();
@@ -204,8 +391,18 @@
                     const contenu = document.getElementById('contenu').value;
 
                     // Vérifier que tous les champs sont remplis
+                    let isValid = true;
                     if (!nom || !email || !societe || !rating || !titre || !contenu) {
-                        alert("Veuillez remplir tous les champs obligatoires.");
+                        isValid = false;
+                        if (!rating && ratingError) {
+                            ratingError.style.display = 'block';
+                        }
+                    } else {
+                        if (ratingError) ratingError.style.display = 'none';
+                    }
+
+                    if (!isValid) {
+                        e.preventDefault();
                         return;
                     }
 
@@ -221,14 +418,17 @@
                         date: new Date().toISOString().split('T')[0]
                     };
 
-                    // Ici, tu pourrais envoyer les données à un serveur
-                    console.log("Nouvel avis:", nouvelAvis);
+                    // Stocker l'avis dans localStorage (simulation)
+                    let avisList = JSON.parse(localStorage.getItem('avisList')) || [];
+                    avisList.push(nouvelAvis);
+                    localStorage.setItem('avisList', JSON.stringify(avisList));
 
                     // Afficher un message de confirmation
                     alert(`Merci, ${nom} ! Votre avis a été soumis avec succès. Il sera publié après vérification par notre équipe.`);
 
                     // Réinitialiser le formulaire
                     this.reset();
+                    if (ratingError) ratingError.style.display = 'none';
                 });
             }
         });
