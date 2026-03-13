@@ -5,18 +5,363 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LitigeDemecall - Résolution de litiges de déménagement</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Supprime les styles inline pour les mettre dans style.css -->
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --success-color: #10b981;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .hero-cta:hover {
+            background: #dc2626;
+        }
+
+        /* Litiges Section */
+        .litiges-section {
+            padding: 60px 0;
+            background: var(--light-color);
+        }
+
+        .litiges-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .litiges-intro {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .litiges-intro p {
+            margin-bottom: 15px;
+        }
+
+        .litiges-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .litige-category {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .category-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .litige-category ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .litige-category li {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+        .litiges-conclusion {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .benefits-list li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+
+        /* Social Proof */
+        .social-proof {
+            padding: 60px 0;
+            text-align: center;
+            background: var(--light-color);
+        }
+
+        .social-proof h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        /* Process Section */
+        .process {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .process h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .process-step div {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 60px 0;
+            background: var(--light-color);
+        }
+
+        .about h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .about-highlight {
+            display: flex;
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .highlight-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-content p {
+            margin: 5px 0;
+            color: var(--dark-color);
+        }
+
+        .naf-code {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .about-stats {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: var(--light-color);
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        /* Disclaimer */
+        .disclaimer-section {
+            background-color: var(--light-color);
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        .disclaimer-text {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-align: center;
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        /* Menu mobile */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+                margin-right: 10px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .litiges-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-card {
+                flex-direction: column;
+            }
+
+            .disclaimer-text {
+                font-size: 0.85rem;
+                padding: 0 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header avec menu mobile -->
-   <header>
+    <header>
         <nav class="container">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Demecall">
             </a>
-            <!-- Bouton menu mobile UNIQUEMENT dans le HTML -->
             <button class="menu-toggle" aria-label="Ouvrir le menu">☰</button>
             <ul class="nav-links">
+                <li><a href="index.html" class="active">Accueil</a></li>
                 <li><a href="services.html">Nos Services</a></li>
                 <li><a href="tarifs.html">Tarifs</a></li>
                 <li><a href="avis.html">Avis Clients</a></li>
@@ -215,7 +560,7 @@
                 <div class="footer-section">
                     <h3>Liens utiles</h3>
                     <ul>
-                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html" class="active">Accueil</a></li>
                         <li><a href="services.html">Nos Services</a></li>
                         <li><a href="tarifs.html">Tarifs</a></li>
                         <li><a href="avis.html">Avis Clients</a></li>
@@ -246,6 +591,37 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion du menu mobile
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (menuToggle && navLinks) {
+                // Fermer le menu si on clique en dehors
+                document.addEventListener('click', function(e) {
+                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+
+                // Ouvrir/fermer le menu
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+                });
+
+                // Fermer le menu quand on clique sur un lien
+                const links = navLinks.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            navLinks.classList.remove('active');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
