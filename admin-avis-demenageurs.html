@@ -13,6 +13,8 @@
             --light-color: #f8fafc;
             --dark-color: #1e293b;
             --border-color: #e2e8f0;
+            --warning-color: #fbbf24;
+            --danger-color: #f87171;
         }
 
         body {
@@ -42,6 +44,8 @@
             text-align: center;
             font-size: 2rem;
             margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
         }
 
         h2 {
@@ -49,10 +53,22 @@
             margin-top: 40px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .avis-section {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        .avis-count {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
         }
 
         .avis-item {
@@ -62,6 +78,12 @@
             border-radius: 8px;
             background: var(--light-color);
             position: relative;
+            transition: all 0.3s;
+        }
+
+        .avis-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
         }
 
         .avis-header {
@@ -77,6 +99,17 @@
             margin-bottom: 10px;
         }
 
+        .note-display {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .stars {
+            color: var(--warning-color);
+            margin-right: 5px;
+        }
+
         .valider-btn {
             background-color: var(--success-color);
             color: white;
@@ -85,12 +118,13 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             margin-top: 10px;
         }
 
         .valider-btn:hover {
             background-color: #0d9488;
+            transform: translateY(-1px);
         }
 
         .empty-message {
@@ -98,6 +132,30 @@
             padding: 20px;
             color: #666;
             font-style: italic;
+            background-color: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            background-color: #dc2626;
+            transform: translateY(-1px);
         }
 
         @media (max-width: 768px) {
@@ -111,6 +169,21 @@
 
             h2 {
                 font-size: 1.3rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .avis-item {
+                padding: 15px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .valider-btn, .delete-btn {
+                width: 100%;
             }
         }
     </style>
@@ -121,13 +194,19 @@
 
         <!-- Section des avis en attente -->
         <div class="avis-section">
-            <h2>Avis en attente de validation</h2>
+            <h2>
+                Avis en attente de validation
+                <span class="avis-count" id="pending-count">0</span>
+            </h2>
             <div id="pending-avis-list"></div>
         </div>
 
         <!-- Section des avis validés -->
         <div class="avis-section">
-            <h2>Avis validés</h2>
+            <h2>
+                Avis validés
+                <span class="avis-count" id="validated-count">0</span>
+            </h2>
             <div id="validated-avis-list"></div>
         </div>
     </div>
@@ -137,6 +216,9 @@
         function loadPendingAvis() {
             const pendingAvis = JSON.parse(localStorage.getItem('pendingAvisDemenageurs')) || [];
             const container = document.getElementById('pending-avis-list');
+            const countElement = document.getElementById('pending-count');
+
+            if (countElement) countElement.textContent = pendingAvis.length;
 
             if (!container) return;
 
@@ -145,23 +227,37 @@
                 return;
             }
 
-            container.innerHTML = pendingAvis.map(avis =>
-                `<div class="avis-item">
+            container.innerHTML = pendingAvis.map(avis => {
+                const stars = '★'.repeat(parseInt(avis.note)) + '☆'.repeat(5 - parseInt(avis.note));
+                return `
+                <div class="avis-item">
                     <div class="avis-header">
                         <h3>${avis.nom}</h3>
-                        <span class="avis-meta">${avis.date}</span>
+                        <span class="avis-meta">${new Date(avis.date).toLocaleDateString('fr-FR')}</span>
                     </div>
-                    <p class="avis-meta"><strong>Société:</strong> ${avis.societe} | <strong>Note:</strong> ${avis.note}/5</p>
+                    <p class="avis-meta">
+                        <strong>Société:</strong> ${avis.societe} |
+                        <span class="note-display">
+                            <span class="stars">${stars}</span>
+                            (${avis.note}/5)
+                        </span>
+                    </p>
                     <p>${avis.commentaire}</p>
-                    <button class="valider-btn" onclick="validateAvis(${avis.id})">Valider cet avis</button>
-                </div>`
-            ).join('');
+                    <div class="actions">
+                        <button class="valider-btn" onclick="validateAvis(${avis.id})">Valider</button>
+                        <button class="delete-btn" onclick="deleteAvis(${avis.id}, 'pending')">Supprimer</button>
+                    </div>
+                </div>`;
+            }).join('');
         }
 
         // Charger et afficher les avis validés
         function loadValidatedAvis() {
             const validatedAvis = JSON.parse(localStorage.getItem('validatedAvisDemenageurs')) || [];
             const container = document.getElementById('validated-avis-list');
+            const countElement = document.getElementById('validated-count');
+
+            if (countElement) countElement.textContent = validatedAvis.length;
 
             if (!container) return;
 
@@ -170,16 +266,27 @@
                 return;
             }
 
-            container.innerHTML = validatedAvis.map(avis =>
-                `<div class="avis-item">
+            container.innerHTML = validatedAvis.map(avis => {
+                const stars = '★'.repeat(parseInt(avis.note)) + '☆'.repeat(5 - parseInt(avis.note));
+                return `
+                <div class="avis-item">
                     <div class="avis-header">
                         <h3>${avis.nom}</h3>
-                        <span class="avis-meta">${avis.date}</span>
+                        <span class="avis-meta">${new Date(avis.date).toLocaleDateString('fr-FR')}</span>
                     </div>
-                    <p class="avis-meta"><strong>Société:</strong> ${avis.societe} | <strong>Note:</strong> ${avis.note}/5</p>
+                    <p class="avis-meta">
+                        <strong>Société:</strong> ${avis.societe} |
+                        <span class="note-display">
+                            <span class="stars">${stars}</span>
+                            (${avis.note}/5)
+                        </span>
+                    </p>
                     <p>${avis.commentaire}</p>
-                </div>`
-            ).join('');
+                    <div class="actions">
+                        <button class="delete-btn" onclick="deleteAvis(${avis.id}, 'validated')">Supprimer</button>
+                    </div>
+                </div>`;
+            }).join('');
         }
 
         // Valider un avis
@@ -198,10 +305,59 @@
 
                 loadPendingAvis();
                 loadValidatedAvis();
-                alert("Avis validé avec succès !");
+                showNotification("Avis validé avec succès !", "success");
             } else {
-                alert("Erreur: avis non trouvé.");
+                showNotification("Erreur: avis non trouvé.", "error");
             }
+        }
+
+        // Supprimer un avis
+        function deleteAvis(avisId, type) {
+            let avisList = JSON.parse(localStorage.getItem(`${type}AvisDemenageurs`)) || [];
+            const avisIndex = avisList.findIndex(avis => avis.id === avisId);
+
+            if (avisIndex !== -1) {
+                if (confirm("Êtes-vous sûr de vouloir supprimer cet avis ?")) {
+                    avisList.splice(avisIndex, 1);
+                    localStorage.setItem(`${type}AvisDemenageurs`, JSON.stringify(avisList));
+
+                    if (type === 'pending') {
+                        loadPendingAvis();
+                    } else {
+                        loadValidatedAvis();
+                    }
+                    showNotification("Avis supprimé avec succès.", "success");
+                }
+            } else {
+                showNotification("Erreur: avis non trouvé.", "error");
+            }
+        }
+
+        // Afficher une notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px 20px';
+            notification.style.borderRadius = '6px';
+            notification.style.color = 'white';
+            notification.style.fontWeight = '500';
+            notification.style.zIndex = '1000';
+            notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            notification.style.backgroundColor = type === 'success' ? '#10b981' : '#f87171';
+            notification.style.transition = 'all 0.3s';
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
         }
 
         // Charger les avis au démarrage
