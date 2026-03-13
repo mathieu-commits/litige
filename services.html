@@ -13,9 +13,30 @@
             --light-color: #f8fafc;
             --dark-color: #1e293b;
             --border-color: #e2e8f0;
+            --accent-color: #ef4444;
         }
 
         /* Styles pour les services */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .services {
             padding: 60px 0;
             background: white;
@@ -138,11 +159,20 @@
         }
 
         /* Menu mobile */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-color);
+            margin-left: auto;
+            margin-right: 10px;
+        }
+
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
-                margin-left: auto;
-                margin-right: 10px;
             }
 
             .nav-links {
@@ -154,7 +184,7 @@
                 background: white;
                 flex-direction: column;
                 padding: 20px;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
             }
 
@@ -173,6 +203,18 @@
             .audit-steps {
                 grid-template-columns: 1fr;
             }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -185,6 +227,7 @@
             </a>
             <button class="menu-toggle" aria-label="Ouvrir le menu">☰</button>
             <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
                 <li><a href="services.html" class="active">Nos Services</a></li>
                 <li><a href="tarifs.html">Tarifs</a></li>
                 <li><a href="avis.html">Avis Clients</a></li>
@@ -242,3 +285,172 @@
                 <div class="service-card">
                     <div>🔍</div>
                     <h3>Audit Préalable</h3>
+                    <p>Avant de signer, nous vérifions les clauses abusives, les licences du déménageur et les garanties proposées.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Audit -->
+    <section class="audit-section">
+        <div class="container">
+            <h2>Notre Processus d'Audit</h2>
+            <p>Un accompagnement complet pour sécuriser votre déménagement et résoudre les litiges.</p>
+            <div class="audit-steps">
+                <div class="step">
+                    <h3>1. Analyse du contrat</h3>
+                    <p>Nous vérifions les clauses abusives, les garanties et les engagements du déménageur.</p>
+                </div>
+                <div class="step">
+                    <h3>2. Vérification des licences</h3>
+                    <p>Nous contrôlons que le déménageur est bien déclaré et assuré.</p>
+                </div>
+                <div class="step">
+                    <h3>3. Mise en demeure</h3>
+                    <p>Si nécessaire, nous envoyons une mise en demeure formelle pour obtenir réparation.</p>
+                </div>
+                <div class="step">
+                    <h3>4. Négociation</h3>
+                    <p>Nous négociions avec le déménageur pour obtenir une indemnisation juste.</p>
+                </div>
+                <div class="step">
+                    <h3>5. Recours juridique</h3>
+                    <p>En dernier recours, nous engageons des actions en justice si nécessaire.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Témoignages Clients -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Ils nous font confiance</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-item">
+                    <p>Grâce à LitigeDemecall, j'ai récupéré 1 200 € pour des meubles endommagés pendant mon déménagement. Leur équipe a été réactive et professionnelle !</p>
+                    <div class="testimonial-author">— Marie L., Paris</div>
+                </div>
+                <div class="testimonial-item">
+                    <p>Mon déménageur a doublé le prix à l'arrivée. LitigeDemecall a négocié un remboursement partiel et m'a évité un stress énorme. Je recommande !</p>
+                    <div class="testimonial-author">— Thomas R., Lyon</div>
+                </div>
+                <div class="testimonial-item">
+                    <p>Le camion n'est jamais venu le jour J. Grâce à leur mise en demeure, j'ai obtenu un remboursement intégral sous 10 jours. Merci !</p>
+                    <div class="testimonial-author">— Sophie M., Bordeaux</div>
+                </div>
+                <div class="testimonial-item">
+                    <p>Ils ont détecté des clauses abusives dans mon contrat avant que je ne signe. J'ai évité une mauvaise surprise !</p>
+                    <div class="testimonial-author">— Pierre D., Marseille</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LitigeDemecall</h3>
+                    <p>Spécialiste de la résolution de litiges de déménagement.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens utiles</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="services.html" class="active">Nos Services</a></li>
+                        <li><a href="tarifs.html">Tarifs</a></li>
+                        <li><a href="avis.html">Avis Clients</a></li>
+                        <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                       <li>📞 07 56 82 24 20</li>
+                        <li>✉️ demecall18@gmail.com</li>
+                        <li>📍 Paris, France</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 LitigeDemecall. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion du menu mobile
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (menuToggle && navLinks) {
+                // Fermer le menu si on clique en dehors
+                document.addEventListener('click', function(e) {
+                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        body.style.overflow = 'auto';
+                    }
+                });
+
+                // Ouvrir/fermer le menu
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+
+                    // Empêcher le scroll quand le menu est ouvert
+                    if (navLinks.classList.contains('active')) {
+                        body.style.overflow = 'hidden';
+                    } else {
+                        body.style.overflow = 'auto';
+                    }
+                });
+
+                // Fermer le menu quand on clique sur un lien
+                const links = navLinks.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            navLinks.classList.remove('active');
+                            body.style.overflow = 'auto';
+                        }
+                    });
+                });
+
+                // Gestion du menu en fonction de la taille de l'écran
+                function handleResize() {
+                    if (window.innerWidth <= 768) {
+                        menuToggle.style.display = 'block';
+                        navLinks.style.display = 'none';
+                        body.style.overflow = 'auto';
+                    } else {
+                        menuToggle.style.display = 'none';
+                        navLinks.style.display = 'flex';
+                        navLinks.classList.remove('active');
+                    }
+                }
+
+                // Appelle la fonction au chargement et au redimensionnement
+                window.addEventListener('resize', handleResize);
+                handleResize();
+            }
+
+            // Ajout d'effets de survol sur les cartes de service
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
