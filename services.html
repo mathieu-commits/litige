@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nos Services - LitigeDemecall</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         :root {
             --primary-color: #1e3a8a;
@@ -13,30 +12,114 @@
             --light-color: #f8fafc;
             --dark-color: #1e293b;
             --border-color: #e2e8f0;
-            --accent-color: #ef4444;
         }
 
-        /* Styles pour les services */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header et menu mobile */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            position: relative;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-color);
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .cta-button {
+            background: var(--secondary-color);
             color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #2563eb;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f0f8ff, #e0f2fe);
+            padding: 80px 0;
             text-align: center;
-            padding: 100px 0;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
+            color: var(--primary-color);
             margin-bottom: 20px;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: var(--dark-color);
             max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 30px;
         }
 
+        /* Services Section */
         .services {
             padding: 60px 0;
             background: white;
@@ -62,7 +145,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
 
         .service-card:hover {
@@ -81,20 +164,20 @@
             font-size: 1.3rem;
         }
 
-        /* Section Audit */
-        .audit-section {
+        /* Process Section */
+        .process-section {
             padding: 60px 0;
             background: var(--light-color);
         }
 
-        .audit-section h2 {
+        .process-section h2 {
             text-align: center;
             margin-bottom: 30px;
             color: var(--primary-color);
             font-size: 2rem;
         }
 
-        .audit-steps {
+        .process-steps {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
@@ -158,18 +241,57 @@
             font-style: italic;
         }
 
-        /* Menu mobile */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--dark-color);
-            margin-left: auto;
-            margin-right: 10px;
+        /* Footer */
+        footer {
+            background: var(--light-color);
+            padding: 40px 0;
+            margin-top: 60px;
         }
 
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .footer-section p,
+        .footer-section li {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-bottom p {
+            color: #666;
+            margin: 0;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -184,7 +306,7 @@
                 background: white;
                 flex-direction: column;
                 padding: 20px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
             }
 
@@ -196,24 +318,20 @@
                 margin: 10px 0;
             }
 
-            .service-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .audit-steps {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding: 60px 0;
-            }
-
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .hero p {
                 font-size: 1rem;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -291,12 +409,14 @@
         </div>
     </section>
 
-    <!-- Section Audit -->
-    <section class="audit-section">
+    <!-- Process Section -->
+    <section class="process-section">
         <div class="container">
             <h2>Notre Processus d'Audit</h2>
-            <p>Un accompagnement complet pour sécuriser votre déménagement et résoudre les litiges.</p>
-            <div class="audit-steps">
+            <p style="text-align: center; margin-bottom: 30px; color: #666; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Un accompagnement complet pour sécuriser votre déménagement et résoudre les litiges.
+            </p>
+            <div class="process-steps">
                 <div class="step">
                     <h3>1. Analyse du contrat</h3>
                     <p>Nous vérifions les clauses abusives, les garanties et les engagements du déménageur.</p>
@@ -381,75 +501,72 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Gestion du menu mobile
+            // Sélection des éléments
             const menuToggle = document.querySelector('.menu-toggle');
             const navLinks = document.querySelector('.nav-links');
             const body = document.body;
 
-            if (menuToggle && navLinks) {
-                // Fermer le menu si on clique en dehors
-                document.addEventListener('click', function(e) {
-                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                        body.style.overflow = 'auto';
-                    }
-                });
-
-                // Ouvrir/fermer le menu
-                menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    navLinks.classList.toggle('active');
-
-                    // Empêcher le scroll quand le menu est ouvert
-                    if (navLinks.classList.contains('active')) {
-                        body.style.overflow = 'hidden';
-                    } else {
-                        body.style.overflow = 'auto';
-                    }
-                });
-
-                // Fermer le menu quand on clique sur un lien
-                const links = navLinks.querySelectorAll('a');
-                links.forEach(link => {
-                    link.addEventListener('click', function() {
-                        if (window.innerWidth <= 768) {
-                            navLinks.classList.remove('active');
-                            body.style.overflow = 'auto';
-                        }
-                    });
-                });
-
-                // Gestion du menu en fonction de la taille de l'écran
-                function handleResize() {
-                    if (window.innerWidth <= 768) {
-                        menuToggle.style.display = 'block';
-                        navLinks.style.display = 'none';
-                        body.style.overflow = 'auto';
-                    } else {
-                        menuToggle.style.display = 'none';
-                        navLinks.style.display = 'flex';
-                        navLinks.classList.remove('active');
-                    }
-                }
-
-                // Appelle la fonction au chargement et au redimensionnement
-                window.addEventListener('resize', handleResize);
-                handleResize();
+            // Vérification que les éléments existent
+            if (!menuToggle || !navLinks) {
+                console.error("Éléments du menu introuvables");
+                return;
             }
 
-            // Ajout d'effets de survol sur les cartes de service
-            const serviceCards = document.querySelectorAll('.service-card');
-            serviceCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-                });
+            // Fonction pour basculer le menu
+            function toggleMenu() {
+                navLinks.classList.toggle('active');
 
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                // Empêcher le scroll quand le menu est ouvert
+                if (navLinks.classList.contains('active')) {
+                    body.style.overflow = 'hidden';
+                } else {
+                    body.style.overflow = 'auto';
+                }
+            }
+
+            // Ouvrir/fermer le menu
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // Fermer le menu quand on clique sur un lien
+            const links = navLinks.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        toggleMenu();
+                    }
                 });
             });
+
+            // Fermer le menu si on clique en dehors
+            document.addEventListener('click', function(e) {
+                if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    if (navLinks.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                }
+            });
+
+            // Gestion du menu en fonction de la taille de l'écran
+            function handleResize() {
+                if (window.innerWidth <= 768) {
+                    menuToggle.style.display = 'block';
+                    navLinks.style.display = 'none';
+                    navLinks.classList.remove('active');
+                    body.style.overflow = 'auto';
+                } else {
+                    menuToggle.style.display = 'none';
+                    navLinks.style.display = 'flex';
+                    navLinks.classList.remove('active');
+                    body.style.overflow = 'auto';
+                }
+            }
+
+            // Appelle la fonction au chargement et au redimensionnement
+            window.addEventListener('resize', handleResize);
+            handleResize();
         });
     </script>
 </body>
