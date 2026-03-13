@@ -6,90 +6,23 @@
     <title>Avis Déménageurs - LitigeDemecall</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --primary-color: #1e3a8a;
-            --secondary-color: #3b82f6;
-            --success-color: #10b981;
-            --light-color: #f8fafc;
-            --dark-color: #1e293b;
-            --border-color: #e2e8f0;
-            --accent-color: #ef4444;
-            --star-color: #ffc107;
-        }
-
-        /* Styles pour le formulaire */
-        .form-section {
-            padding: 60px 0;
-            background: white;
-        }
-
-        .form-section h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            color: var(--primary-color);
-            font-size: 2rem;
-        }
-
-        .form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--light-color);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
+        /* Styles pour le menu mobile uniquement */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
             color: var(--dark-color);
+            margin-left: auto;
+            margin-right: 10px;
+            padding: 5px;
+            z-index: 1001;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .form-group select {
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 1em;
-            padding-right: 30px;
-        }
-
-        /* Menu mobile */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
-                margin-left: auto;
-                margin-right: 10px;
             }
 
             .nav-links {
@@ -103,6 +36,7 @@
                 padding: 20px;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
+                width: 100%;
             }
 
             .nav-links.active {
@@ -111,10 +45,7 @@
 
             .nav-links li {
                 margin: 10px 0;
-            }
-
-            .form-container {
-                padding: 25px;
+                text-align: center;
             }
         }
     </style>
@@ -234,33 +165,63 @@
             // Gestion du menu mobile
             const menuToggle = document.querySelector('.menu-toggle');
             const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
 
-            if (menuToggle && navLinks) {
-                // Fermer le menu si on clique en dehors
-                document.addEventListener('click', function(e) {
-                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                    }
-                });
-
-                // Ouvrir/fermer le menu
-                menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    navLinks.classList.toggle('active');
-                });
-
-                // Fermer le menu quand on clique sur un lien
-                const links = navLinks.querySelectorAll('a');
-                links.forEach(link => {
-                    link.addEventListener('click', function() {
-                        if (window.innerWidth <= 768) {
-                            navLinks.classList.remove('active');
-                        }
-                    });
-                });
+            if (!menuToggle || !navLinks) {
+                console.error("Éléments du menu introuvables");
+                return;
             }
 
-            // Gestion du formulaire d'avis déménageurs
+            // Fonction pour basculer le menu
+            function toggleMenu() {
+                navLinks.classList.toggle('active');
+                body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+            }
+
+            // Ouvrir/fermer le menu
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // Fermer le menu quand on clique sur un lien
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Fermer le menu si on clique en dehors
+            document.addEventListener('click', function(e) {
+                if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    if (navLinks.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                }
+            });
+
+            // Gestion du redimensionnement
+            function handleResize() {
+                if (window.innerWidth <= 768) {
+                    menuToggle.style.display = 'block';
+                    navLinks.style.display = 'none';
+                    navLinks.classList.remove('active');
+                    body.style.overflow = 'auto';
+                } else {
+                    menuToggle.style.display = 'none';
+                    navLinks.style.display = 'flex';
+                    navLinks.classList.remove('active');
+                    body.style.overflow = 'auto';
+                }
+            }
+
+            // Appelle la fonction au chargement et au redimensionnement
+            window.addEventListener('resize', handleResize);
+            handleResize();
+
+            // Gestion du formulaire d'avis déménageurs (inchangé)
             const avisForm = document.getElementById('avis-demenageur-form');
             if (avisForm) {
                 avisForm.addEventListener('submit', function(e) {
@@ -311,8 +272,6 @@
                     .then(response => {
                         if (response.ok) {
                             alert("Merci pour votre avis ! Il sera validé sous peu.");
-
-                            // Réinitialiser le formulaire
                             this.reset();
 
                             // Redirection si spécifiée
@@ -336,26 +295,7 @@
                     });
                 });
             }
-
-            // Gestion du menu en fonction de la taille de l'écran
-            function handleResize() {
-                if (window.innerWidth <= 768) {
-                    if (menuToggle) menuToggle.style.display = 'block';
-                    if (navLinks) navLinks.style.display = 'none';
-                } else {
-                    if (menuToggle) menuToggle.style.display = 'none';
-                    if (navLinks) {
-                        navLinks.style.display = 'flex';
-                        navLinks.classList.remove('active');
-                    }
-                }
-            }
-
-            // Appelle la fonction au chargement et au redimensionnement
-            window.addEventListener('resize', handleResize);
-            handleResize();
         });
     </script>
 </body>
 </html>
-
