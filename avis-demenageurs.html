@@ -354,7 +354,63 @@
             // Appelle la fonction au chargement et au redimensionnement
             window.addEventListener('resize', handleResize);
             handleResize();
-        });
+        }); document.addEventListener('DOMContentLoaded', function() {
+        // Gestion du menu mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
+
+        if (menuToggle && navLinks) {
+            // Fermer le menu si on clique en dehors
+            document.addEventListener('click', function(e) {
+                if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    body.style.overflow = 'auto';
+                }
+            });
+
+            // Ouvrir/fermer le menu
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navLinks.classList.toggle('active');
+
+                // Empêcher le scroll quand le menu est ouvert
+                if (navLinks.classList.contains('active')) {
+                    body.style.overflow = 'hidden';
+                } else {
+                    body.style.overflow = 'auto';
+                }
+            });
+
+            // Fermer le menu quand on clique sur un lien
+            const links = navLinks.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navLinks.classList.remove('active');
+                        body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Gestion du menu en fonction de la taille de l'écran
+            function handleResize() {
+                if (window.innerWidth <= 768) {
+                    menuToggle.style.display = 'block';
+                    navLinks.style.display = 'none';
+                    body.style.overflow = 'auto';
+                } else {
+                    menuToggle.style.display = 'none';
+                    navLinks.style.display = 'flex';
+                    navLinks.classList.remove('active');
+                }
+            }
+
+            // Appelle la fonction au chargement et au redimensionnement
+            window.addEventListener('resize', handleResize);
+            handleResize();
+        }
+    });
     </script>
 </body>
 </html>
