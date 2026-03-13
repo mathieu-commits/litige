@@ -5,18 +5,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nos Services - LitigeDemecall</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --success-color: #10b981;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        /* Styles pour les services */
+        .services {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .services h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card div {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* Section Audit */
+        .audit-section {
+            padding: 60px 0;
+            background: var(--light-color);
+        }
+
+        .audit-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .audit-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .step {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .step h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Témoignages */
+        .testimonials {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .testimonial-item {
+            background: var(--light-color);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .testimonial-item::before {
+            content: '"';
+            font-size: 50px;
+            color: var(--secondary-color);
+            position: absolute;
+            top: 5px;
+            left: 10px;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            margin-top: 15px;
+            color: var(--primary-color);
+            font-style: italic;
+        }
+
+        /* Menu mobile */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+                margin-right: 10px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .audit-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header avec menu mobile -->
-     <header>
+    <header>
         <nav class="container">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Demecall">
             </a>
-            <!-- Bouton menu mobile UNIQUEMENT dans le HTML -->
             <button class="menu-toggle" aria-label="Ouvrir le menu">☰</button>
             <ul class="nav-links">
-                <li><a href="services.html">Nos Services</a></li>
+                <li><a href="services.html" class="active">Nos Services</a></li>
                 <li><a href="tarifs.html">Tarifs</a></li>
                 <li><a href="avis.html">Avis Clients</a></li>
                 <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
@@ -73,142 +242,3 @@
                 <div class="service-card">
                     <div>🔍</div>
                     <h3>Audit Préalable</h3>
-                    <p>Avant de signer, nous vérifions les clauses abusives, les licences du déménageur et les garanties proposées.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Audit -->
-    <section class="audit-section">
-        <div class="container">
-            <h2>Notre Processus d'Audit</h2>
-            <p>Un accompagnement complet pour sécuriser votre déménagement et résoudre les litiges.</p>
-            <div class="audit-steps">
-                <div class="step">
-                    <h3>1. Analyse du contrat</h3>
-                    <p>Nous vérifions les clauses abusives, les garanties et les engagements du déménageur.</p>
-                </div>
-                <div class="step">
-                    <h3>2. Vérification des licences</h3>
-                    <p>Nous contrôlons que le déménageur est bien déclaré et assuré.</p>
-                </div>
-                <div class="step">
-                    <h3>3. Mise en demeure</h3>
-                    <p>Si nécessaire, nous envoyons une mise en demeure formelle pour obtenir réparation.</p>
-                </div>
-                <div class="step">
-                    <h3>4. Négociation</h3>
-                    <p>Nous négociions avec le déménageur pour obtenir une indemnisation juste.</p>
-                </div>
-                <div class="step">
-                    <h3>5. Recours juridique</h3>
-                    <p>En dernier recours, nous engageons des actions en justice si nécessaire.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Témoignages Clients -->
-    <section class="testimonials">
-        <div class="container">
-            <h2>Ils nous font confiance</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-item">
-                    <p>Grâce à LitigeDemecall, j'ai récupéré 1 200 € pour des meubles endommagés pendant mon déménagement. Leur équipe a été réactive et professionnelle !</p>
-                    <div class="testimonial-author">— Marie L., Paris</div>
-                </div>
-                <div class="testimonial-item">
-                    <p>Mon déménageur a doublé le prix à l'arrivée. LitigeDemecall a négocié un remboursement partiel et m'a évité un stress énorme. Je recommande !</p>
-                    <div class="testimonial-author">— Thomas R., Lyon</div>
-                </div>
-                <div class="testimonial-item">
-                    <p>Le camion n'est jamais venu le jour J. Grâce à leur mise en demeure, j'ai obtenu un remboursement intégral sous 10 jours. Merci !</p>
-                    <div class="testimonial-author">— Sophie M., Bordeaux</div>
-                </div>
-                <div class="testimonial-item">
-                    <p>Ils ont détecté des clauses abusives dans mon contrat avant que je ne signe. J'ai évité une mauvaise surprise !</p>
-                    <div class="testimonial-author">— Pierre D., Marseille</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>LitigeDemecall</h3>
-                    <p>Spécialiste de la résolution de litiges de déménagement.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Liens utiles</h3>
-                    <ul>
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="services.html" class="active">Nos Services</a></li>
-                        <li><a href="tarifs.html">Tarifs</a></li>
-                        <li><a href="avis.html">Avis Clients</a></li>
-                        <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <ul>
-                       <li>📞 07 56 82 24 20</li>
-                        <li>✉️ demecall18@gmail.com</li>
-                        <li>📍 Paris, France</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2023 LitigeDemecall. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Gestion du menu mobile
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-
-            if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                });
-            }
-
-            // Gestion du menu en fonction de la taille de l'écran
-            function handleResize() {
-                if (window.innerWidth <= 768) {
-                    if (menuToggle) menuToggle.style.display = 'block';
-                    if (navLinks) navLinks.style.display = 'none';
-                } else {
-                    if (menuToggle) menuToggle.style.display = 'none';
-                    if (navLinks) {
-                        navLinks.style.display = 'flex';
-                        navLinks.classList.remove('active');
-                    }
-                }
-            }
-
-            // Appelle la fonction au chargement et au redimensionnement
-            window.addEventListener('resize', handleResize);
-            handleResize();
-
-            // Fermer le menu quand on clique sur un lien
-            if (navLinks) {
-                const links = navLinks.querySelectorAll('a');
-                links.forEach(link => {
-                    link.addEventListener('click', function() {
-                        if (window.innerWidth <= 768) {
-                            navLinks.classList.remove('active');
-                        }
-                    });
-                });
-            }
-        });
-    </script>
-</body>
-</html>
