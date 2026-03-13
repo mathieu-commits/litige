@@ -6,8 +6,8 @@
     <title>Nos Services - LitigeDemecall</title>
     <style>
         :root {
-            --primary-color: #007BFF;
-            --secondary-color: #0056b3;
+            --primary-color: #007BFF; /* Bleu original */
+            --primary-dark: #0056b3;
             --light-color: #f8f9fa;
             --dark-color: #212529;
             --border-color: #dee2e6;
@@ -32,7 +32,7 @@
             padding: 0 20px;
         }
 
-        /* Header et menu */
+        /* Header et menu mobile */
         header {
             background: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -45,6 +45,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 1rem;
+            position: relative;
         }
 
         .logo img {
@@ -76,8 +77,8 @@
             transition: color 0.3s;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
+        .nav-links a.active,
+        .nav-links a:hover {
             color: var(--primary-color);
         }
 
@@ -92,7 +93,7 @@
         }
 
         .cta-button:hover {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-dark);
         }
 
         /* Hero Section */
@@ -496,6 +497,7 @@
         </div>
     </footer>
 
+    <!-- Script pour le menu mobile -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggle = document.querySelector('.menu-toggle');
