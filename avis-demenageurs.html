@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avis Déménageurs - LitigeDemecall</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* UNIQUEMENT le CSS nécessaire pour le menu mobile */
+        /* Styles minimaux pour le menu mobile */
         .menu-toggle {
             display: none;
             background: none;
             border: none;
             font-size: 24px;
             cursor: pointer;
-            color: var(--dark-color);
-            margin-left: auto;
-            margin-right: 10px;
+            color: #1e293b;
+            margin: 0 10px;
             z-index: 1001;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         @media (max-width: 768px) {
@@ -32,7 +37,7 @@
                 background: white;
                 flex-direction: column;
                 padding: 20px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
                 z-index: 1000;
             }
             .nav-links.active {
@@ -44,26 +49,79 @@
             }
         }
 
-        /* Styles pour le formulaire (conservés) */
-        .form-section {
-            padding: 60px 0;
-            background: white;
+        /* Styles de base pour le contenu */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
-        .form-section h2 {
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1e293b;
+            padding: 0.5rem 1rem;
+        }
+        .cta-button {
+            background: #007BFF;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .hero {
+            padding: 4rem 0;
             text-align: center;
-            margin-bottom: 40px;
-            color: var(--primary-color);
-            font-size: 2rem;
+            background: #f8f9fa;
+        }
+        .form-section {
+            padding: 3rem 0;
+            background: white;
         }
         .form-container {
             max-width: 800px;
             margin: 0 auto;
-            background: var(--light-color);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
-        /* ... (le reste de tes styles existants) ... */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+        footer {
+            background: #f8f9fa;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
     </style>
 </head>
 <body>
@@ -71,10 +129,10 @@
     <header>
         <nav class="container">
             <a href="index.html" class="logo">
-                <img src="logo.png" alt="Logo Demecall">
+                <img src="logo.png" alt="Logo Demecall" style="height: 40px;">
             </a>
-            <button class="menu-toggle" aria-label="Ouvrir le menu">☰</button>
-            <ul class="nav-links">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="services.html">Nos Services</a></li>
                 <li><a href="tarifs.html">Tarifs</a></li>
@@ -94,22 +152,12 @@
         </div>
     </section>
 
-    <!-- Section pour soumettre un avis -->
+    <!-- Formulaire -->
     <section class="form-section">
         <div class="container">
             <h2>Laisser un avis sur un déménageur</h2>
             <div class="form-container">
-                <form
-                    action="https://formsubmit.co/mathieu@expertdem.com"
-                    method="POST"
-                    id="avis-demenageur-form"
-                >
-                    <!-- Champs cachés pour FormSubmit -->
-                    <input type="hidden" name="_subject" value="Nouvel avis sur un déménageur - Demecall">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" value="https://ton-site.com/merci-avis.html">
-
-                    <!-- Champs du formulaire -->
+                <form id="avisForm">
                     <div class="form-group">
                         <label for="nom">Votre nom *</label>
                         <input type="text" id="nom" name="nom" required>
@@ -119,47 +167,41 @@
                         <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="societe">Nom de la société de déménagement *</label>
-                        <input type="text" id="societe" name="societe" placeholder="Ex: Déménagements Martin" required>
+                        <label for="societe">Société de déménagement *</label>
+                        <input type="text" id="societe" name="societe" required>
                     </div>
                     <div class="form-group">
-                        <label for="note">Note (1 à 5) *</label>
+                        <label for="note">Note *</label>
                         <select id="note" name="note" required>
-                            <option value="" disabled selected>Sélectionnez une note</option>
-                            <option value="1">1 - Très mauvais</option>
-                            <option value="2">2 - Mauvais</option>
-                            <option value="3">3 - Moyen</option>
-                            <option value="4">4 - Bon</option>
-                            <option value="5">5 - Excellent</option>
+                            <option value="">Sélectionnez</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="commentaire">Votre avis *</label>
-                        <textarea id="commentaire" name="commentaire" placeholder="Décrivez votre expérience avec cette société de déménagement..." required></textarea>
+                        <textarea id="commentaire" name="commentaire" required></textarea>
                     </div>
-                    <button type="submit" class="cta-button" id="submit-btn">Envoyer mon avis</button>
+                    <button type="submit" class="cta-button">Envoyer</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Section des avis existants (ajoutée) -->
-    <section class="avis-section">
+    <!-- Section des avis existants -->
+    <section class="form-section">
         <div class="container">
-            <h2>Avis sur les déménageurs</h2>
-            <div class="avis-grid" id="avis-list">
-                <!-- Les avis seront chargés ici par JavaScript -->
-                <div class="avis-card">
+            <h2>Avis existants</h2>
+            <div id="avisList">
+                <!-- Avis seront chargés ici -->
+                <div style="background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
                     <h3>Exemple d'avis</h3>
                     <p>Société: Déménagements Express</p>
-                    <div class="note">★★★★☆ (4/5)</div>
-                    <p>Service professionnel et ponctuel. Quelques petits dommages mineurs sur un meuble, mais globalement satisfait.</p>
-                </div>
-                <div class="avis-card">
-                    <h3>Autre exemple</h3>
-                    <p>Société: Transports Rapides</p>
-                    <div class="note">★★★☆☆ (3/5)</div>
-                    <p>Déménagement dans les temps mais emballage un peu négligé. Prix respecté.</p>
+                    <p>Note: ★★★★☆</p>
+                    <p>Service professionnel et ponctuel.</p>
                 </div>
             </div>
         </div>
@@ -167,52 +209,23 @@
 
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>LitigeDemecall</h3>
-                    <p>Spécialiste de la résolution de litiges de déménagement.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Liens utiles</h3>
-                    <ul>
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="services.html">Nos Services</a></li>
-                        <li><a href="tarifs.html">Tarifs</a></li>
-                        <li><a href="avis.html">Avis Clients</a></li>
-                        <li><a href="avis-demenageurs.html" class="active">Avis Déménageurs</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <ul>
-                       <li>📞 07 56 82 24 20</li>
-                        <li>✉️ demecall18@gmail.com</li>
-                        <li>📍 Paris, France</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2023 LitigeDemecall. Tous droits réservés.</p>
-            </div>
+            <p style="text-align: center; padding: 1rem 0;">© 2023 LitigeDemecall. Tous droits réservés.</p>
         </div>
     </footer>
 
+    <!-- Script minimal pour le menu mobile -->
     <script>
-        // Gestion du menu mobile (fonctionnel)
         document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
 
             if (menuToggle && navLinks) {
-                // Ouvrir/fermer le menu
-                menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
+                menuToggle.addEventListener('click', function() {
                     navLinks.classList.toggle('active');
                 });
 
                 // Fermer le menu quand on clique sur un lien
-                navLinks.querySelectorAll('a').forEach(link => {
+                document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', function() {
                         if (window.innerWidth <= 768) {
                             navLinks.classList.remove('active');
@@ -220,89 +233,14 @@
                     });
                 });
 
-                // Fermer le menu si on clique en dehors
-                document.addEventListener('click', function(e) {
-                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                    }
-                });
-
                 // Gestion du redimensionnement
-                function handleResize() {
-                    if (window.innerWidth <= 768) {
-                        menuToggle.style.display = 'block';
-                        navLinks.style.display = 'none';
-                    } else {
-                        menuToggle.style.display = 'none';
-                        navLinks.style.display = 'flex';
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
                         navLinks.classList.remove('active');
                     }
-                }
-
-                window.addEventListener('resize', handleResize);
-                handleResize();
-            }
-
-            // Gestion du formulaire (inchangée)
-            const avisForm = document.getElementById('avis-demenageur-form');
-            if (avisForm) {
-                avisForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // ... (ton code existant pour le formulaire)
                 });
             }
-
-            // Chargement des avis (optionnel)
-            function loadAvis() {
-                const avisList = document.getElementById('avis-list');
-                if (avisList) {
-                    // Exemple de chargement d'avis (à adapter selon tes besoins)
-                    const avis = JSON.parse(localStorage.getItem('validatedAvisDemenageurs')) || [];
-                    if (avis.length > 0) {
-                        avisList.innerHTML = avis.map(avis =>
-                            `<div class="avis-card">
-                                <h3>${avis.nom}</h3>
-                                <p>Société: ${avis.societe}</p>
-                                <div class="note">${'★'.repeat(avis.note)}${'☆'.repeat(5-avis.note)} (${avis.note}/5)</div>
-                                <p>${avis.commentaire}</p>
-                            </div>`
-                        ).join('');
-                    }
-                }
-            }
-
-            loadAvis();
         });
     </script>
-
-    <!-- Styles supplémentaires pour les avis -->
-    <style>
-        .avis-section {
-            padding: 40px 0;
-            background: white;
-        }
-        .avis-section h2 {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-        .avis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        .avis-card {
-            background: var(--light-color);
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .note {
-            color: #ffc107;
-            margin: 0.5rem 0;
-            font-size: 1.1rem;
-        }
-    </style>
 </body>
 </html>
