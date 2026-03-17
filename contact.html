@@ -3,128 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - LitigeDemecall</title>
+    <title>Déposer un dossier - LitigeDemecall</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --primary-color: #1e3a8a;
-            --secondary-color: #3b82f6;
-            --success-color: #10b981;
-            --light-color: #f8fafc;
-            --dark-color: #1e293b;
-            --border-color: #e2e8f0;
-            --accent-color: #ef4444;
-        }
-
-        /* Styles pour le formulaire de contact */
-        .form-section {
-            padding: 60px 0;
-            background: white;
-        }
-
-        .form-section h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            color: var(--primary-color);
-            font-size: 2rem;
-        }
-
-        .form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--light-color);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .file-upload {
-            border: 2px dashed var(--border-color);
-            padding: 25px;
-            text-align: center;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .file-upload:hover {
-            border-color: var(--secondary-color);
-            background-color: rgba(59, 130, 246, 0.05);
-        }
-
-        .file-upload input {
-            display: none;
-        }
-
-        .file-upload p {
-            margin: 0;
-            color: #666;
-        }
-
-        .confirmation-message {
-            display: none;
-            background: var(--success-color);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 6px;
-            margin: 20px auto;
-            max-width: 800px;
-        }
-
-        .pack-info {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 25px;
-            display: none;
-            text-align: center;
-        }
-
-        /* Menu mobile */
+        /* Styles pour le menu mobile (conservés) */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
                 margin-left: auto;
                 margin-right: 10px;
             }
-
             .nav-links {
                 display: none;
                 position: absolute;
@@ -137,18 +25,34 @@
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
             }
-
             .nav-links.active {
                 display: flex;
             }
+        }
 
-            .nav-links li {
-                margin: 10px 0;
-            }
-
-            .form-container {
-                padding: 25px;
-            }
+        /* Styles pour le formulaire */
+        .file-upload {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        .file-upload-label {
+            display: block;
+            cursor: pointer;
+        }
+        .file-list {
+            margin-top: 10px;
+            text-align: left;
+        }
+        .file-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
         }
     </style>
 </head>
@@ -164,8 +68,8 @@
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="services.html">Nos Services</a></li>
                 <li><a href="tarifs.html">Tarifs</a></li>
-               <!-- <li><a href="avis.html" class="active">Avis Clients</a></li>
-                <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>-->
+                <li><a href="avis.html">Avis Clients</a></li>
+                <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
             </ul>
             <a href="contact.html" class="cta-button">Déposer mon dossier</a>
@@ -186,9 +90,9 @@
             <h2>Déposer un Litige</h2>
 
             <!-- Affichage du pack sélectionné -->
-            <div id="pack-selected" class="pack-info"></div>
+            <div id="pack-selected" class="pack-info" style="display: none;"></div>
 
-            <div id="confirmation" class="confirmation-message">
+            <div id="confirmation" class="confirmation-message" style="display: none;">
                 Votre dossier a été envoyé avec succès ! Nous vous contacterons sous 24h.
             </div>
 
@@ -247,8 +151,9 @@
                     <div class="form-group">
                         <label>Joindre des preuves (photos, devis, etc.)</label>
                         <div class="file-upload">
+                            <label for="preuves" class="file-upload-label">Glissez-déposez vos fichiers ici ou cliquez pour parcourir</label>
                             <input type="file" id="preuves" name="preuves" multiple>
-                            <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
+                            <div id="file-list" class="file-list"></div>
                         </div>
                     </div>
                     <button type="submit" class="cta-button" id="submit-btn">Envoyer mon dossier pour audit gratuit</button>
@@ -258,36 +163,7 @@
     </section>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>LitigeDemecall</h3>
-                    <p>Spécialiste de la résolution de litiges de déménagement.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Liens utiles</h3>
-                    <ul>
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="services.html">Nos Services</a></li>
-                        <li><a href="tarifs.html">Tarifs</a></li>
-                        <li><a href="avis.html">Avis Clients</a></li>
-                        <li><a href="avis-demenageurs.html">Avis Déménageurs</a></li>
-                        <li><a href="contact.html" class="active">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <ul>
-                       <li>📞 07 56 82 24 20</li>
-                        <li>✉️ demecall18@gmail.com</li>
-                        <li>📍 Paris, France</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2023 LitigeDemecall. Tous droits réservés.</p>
-            </div>
-        </div>
+        <!-- Ton footer existant -->
     </footer>
 
     <script>
@@ -297,22 +173,12 @@
             const navLinks = document.querySelector('.nav-links');
 
             if (menuToggle && navLinks) {
-                // Fermer le menu si on clique en dehors
-                document.addEventListener('click', function(e) {
-                    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                    }
-                });
-
-                // Ouvrir/fermer le menu
-                menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
+                menuToggle.addEventListener('click', function() {
                     navLinks.classList.toggle('active');
                 });
 
                 // Fermer le menu quand on clique sur un lien
-                const links = navLinks.querySelectorAll('a');
-                links.forEach(link => {
+                navLinks.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', function() {
                         if (window.innerWidth <= 768) {
                             navLinks.classList.remove('active');
@@ -346,6 +212,24 @@
                 }
             }
 
+            // Gestion de l'affichage des fichiers uploadés
+            const fileInput = document.getElementById('preuves');
+            const fileList = document.getElementById('file-list');
+
+            if (fileInput && fileList) {
+                fileInput.addEventListener('change', function() {
+                    fileList.innerHTML = '';
+                    if (this.files.length > 0) {
+                        for (let i = 0; i < this.files.length; i++) {
+                            const fileItem = document.createElement('div');
+                            fileItem.className = 'file-item';
+                            fileItem.textContent = this.files[i].name;
+                            fileList.appendChild(fileItem);
+                        }
+                    }
+                });
+            }
+
             // Gestion de l'envoi du formulaire
             const litigeForm = document.getElementById('litige-form');
             if (litigeForm) {
@@ -356,6 +240,12 @@
                     if (submitBtn) {
                         submitBtn.disabled = true;
                         submitBtn.textContent = "Envoi en cours...";
+                    }
+
+                    // Vérification des fichiers
+                    const fileInput = document.getElementById('preuves');
+                    if (fileInput && fileInput.files.length > 0) {
+                        console.log("Fichiers à envoyer:", fileInput.files);
                     }
 
                     fetch(this.action, {
@@ -382,6 +272,7 @@
                         }
                     })
                     .catch(error => {
+                        console.error('Erreur:', error);
                         alert("Erreur : " + error.message);
                         if (submitBtn) {
                             submitBtn.disabled = false;
@@ -389,25 +280,6 @@
                         }
                     });
                 });
-            }
-
-            // Gestion de l'affichage des fichiers uploadés
-            const fileInput = document.getElementById('preuves');
-            if (fileInput) {
-                const fileNamesContainer = document.querySelector('.file-upload p');
-                if (fileNamesContainer) {
-                    fileInput.addEventListener('change', function() {
-                        if (this.files.length > 0) {
-                            let fileNames = '';
-                            for (let i = 0; i < this.files.length; i++) {
-                                fileNames += this.files[i].name + (i < this.files.length - 1 ? ', ' : '');
-                            }
-                            fileNamesContainer.textContent = 'Fichiers sélectionnés: ' + fileNames;
-                        } else {
-                            fileNamesContainer.textContent = 'Glissez-déposez vos fichiers ici ou cliquez pour parcourir';
-                        }
-                    });
-                }
             }
         });
     </script>
